@@ -1,4 +1,4 @@
-version: '3'
+# docker-compose.production.yml
 
 volumes:
   pg_data:
@@ -12,7 +12,7 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
   backend:
-    build: ./backend/
+    image: florentsx/kittygram_backend # Качаем с Docker Hub
     env_file: .env
     depends_on:
       - db
@@ -22,19 +22,19 @@ services:
       - media:/app/media
   frontend:
     env_file: .env
-    build: ./frontend/
+    image: florentsx/kittygram_frontend
     command: cp -r /app/build/. /static/
     volumes:
       - static:/static
   gateway:
-    build: ./nginx/
+    image: florentsx/kittygram_gateway  # Качаем с Docker Hub
     env_file: .env
     depends_on:
       - backend
       - frontend
     restart: on-failure
-    ports:
-      - 9000:80
     volumes:
       - static:/static
       - media:/media
+    ports:
+      - 9000:80
