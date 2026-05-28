@@ -12,7 +12,7 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
   backend:
-    image: florentsx/kittygram_backend # Качаем с Docker Hub
+    image: florentsx/kittygram_backend
     env_file: .env
     depends_on:
       - db
@@ -27,7 +27,7 @@ services:
     volumes:
       - static:/static
   gateway:
-    image: florentsx/kittygram_gateway  # Качаем с Docker Hub
+    image: florentsx/kittygram_gateway
     env_file: .env
     depends_on:
       - backend
